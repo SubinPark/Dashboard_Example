@@ -4,10 +4,13 @@
  */
 
 var express = require('express');
+
 var routes = require('./routes');
 var user = require('./routes/user');
-var rtApp = require('./routes/application');
-var rtContent = require('./routes/content');
+var rtApp = require('./routes/application.js');
+var rtContent = require('./routes/content.js');
+var rtLogin = require('./routes/login.js');
+
 var http = require('http');
 var path = require('path');
 
@@ -36,8 +39,12 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 
 //Dashboard stuff here
-app.get('/application', rtApp.app);
 app.get('/content', rtContent.content);
+app.get('/application', rtApp.app);
+//app.get('/login', rtLogin.login);
+app.get('/login', function(req,res) {
+	res.render('login_form.jade');
+})
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
